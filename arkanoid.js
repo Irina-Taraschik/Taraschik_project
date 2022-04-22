@@ -10,7 +10,7 @@ var game = {
   cols: 8,
   blocks: [],
   sprites: {
-    background: null,
+    background_game: null,
     platform: null,
     ball: null,
     block: null
@@ -18,6 +18,16 @@ var game = {
   init: function() {
     var canvas = document.getElementById('mycanvas');
     this.ctx = canvas.getContext('2d');
+
+    window.addEventListener('keydown', function(e) {
+      if (e.keyCode == 37) {
+        game.platform.currentSpeed = game.platform.maxSpeed
+
+      } else if (e.keyCode == 39) {
+    
+    
+      }
+    });
   },
   load() {
     for (var key in this.sprites) {
@@ -25,24 +35,6 @@ var game = {
       this.sprites[key].src = 'images/'+ key + '.png';
     }
   },
-  // createBlocks() {
-  //   for (let row = 0; row < this.rows; row++) {
-  //     for (let col = 0; col < this.cols; col++) {
-  //       this.blocks.push(this.createBlock(row, col));
-  //     }
-  //   }
-  // },
-  // createBlock(row, col) {
-  //   let blockSize = this.sprites.block.width + 2;
-  //   let offsetX = (this.width - blockSize * this.size) / 2;
-  //   let offsetY = (this.height - blockSize * this.size) / 2;
-  //   return {
-  //     row: row,
-  //     col: col,
-  //     x: offsetX + blockSize * col,
-  //     y: offsetY + blockSize * row
-  //   };
-  // },
   create() {
     for (var row = 0; row < this.rows; row++) {
       for (var col = 0; col < this.cols; col++) {
@@ -63,7 +55,7 @@ var game = {
   },
   render() {
     this.ctx.clearRect(0, 0, this.width, this.height);
-    this.ctx.drawImage(this.sprites.background, 0, 0);
+    this.ctx.drawImage(this.sprites.background_game, 0, 0);
     this.ctx.drawImage(this.sprites.platform, this.platform.x, this.platform.y);
     this.ctx.drawImage(this.sprites.ball, this.ball.x, this.ball.y);
 
@@ -84,12 +76,15 @@ game.ball = {
   height: 30,
   frame: 0,
   x: 340,
-  y: 276,
+  y: 270,
 };
 
 game.platform = {
   x: 300,
   y: 300,
+  maxSpeed: 6,
+  currentSpeed: 0
+
 };
 
 window.addEventListener('load', function() {
